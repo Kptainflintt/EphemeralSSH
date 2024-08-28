@@ -30,7 +30,6 @@ Actually, what it does :
 - Use /etc/ssh/revoked_keys to store revoked one
 - Execute every day at 3 AM the script to revoke
 - Use ecdsa 512 keys
-- Use username from client : If you want to use an existing user on the server explicitly, you MUST modify the entry in the app.py file !!!
 
 ### Server side
 
@@ -48,7 +47,10 @@ chmod u+x install.sh
 
 ### Client side
 
-Juste execute "generate.sh" with API inside 
+On generate.sh file, add : 
+- Server's IP
+- Server's user (to make connexions with)
+- Token
 
 # To DO
 
