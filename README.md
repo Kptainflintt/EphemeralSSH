@@ -4,7 +4,7 @@ Flask API for signin certificates to provide temporary SSH acces (without pain)
 ## Why ?
 Sometimes, I want a VM or wathever to rsync some files from a server. To do that, I have to generate key pair, and send public key on server. After some time (and because I don't think to clear it), my authorized_keys file contain lot of entries, and access is still active since I delete them.
 Instead of doing that, I think about having a simple way to have a SSH connexion without generating and sending keys manually but also having a simple way to revoke all access if I want.
-
+IMPORTANT : I strongly advise you to put this API behind a reverse proxy to be able to use it in HTTPS!
 
 ## Features
 
