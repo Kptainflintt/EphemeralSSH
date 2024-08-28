@@ -47,6 +47,7 @@ chmod u+x install.sh
 
 ### Client side
 
+First of all : **you must install jq**
 On generate.sh file, add : 
 - Server's IP
 - Server's user (to make connexions with)
