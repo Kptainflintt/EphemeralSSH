@@ -18,7 +18,7 @@ def generate_cert():
         abort(403, "Invalid token")
 
     public_key = request.form.get('public_key')
-    username = request.form.get('username') # Change it if you want an specific user
+    username = request.form.get('username')
     hostname = request.form.get('hostname')
 
     if not public_key or not username:
