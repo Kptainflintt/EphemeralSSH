@@ -7,21 +7,21 @@ API_URL="http://$SERVER_IP:5000/generate-cert"
 HOSTNAME=$(hostname)
 KEY_PATH="$HOME/.ssh/id_rsa"
 CERT_PATH="$HOME/.ssh/id_rsa-cert.pub"
-TOKEN="448dcd00d1aef552d44e7854f68aaa151b37ed46cdcf1880b704349cd14e687a"  # Remplacez par le token préconfiguré
+TOKEN="some_secure_token"  # Change to your token
 
-# 1. Génération de la paire de clés SSH
+# 1. SSH key pair generation
 ssh-keygen -t ecdsa -b 521 -f $KEY_PATH -N ""
 
-# 2. Envoi de la clé publique pour signature avec le token d'authentification
+# 2. Send public key for signature with authentication token
 PUB_KEY=$(cat "${KEY_PATH}.pub")
 CERT=$(curl -X POST -H "Authorization: Bearer $TOKEN" -F "public_key=$PUB_KEY" -F "username=kptain" -F "hostname=$HOSTNAME" $API_URL | jq -r '.certificate')
 
-# 3. Stocker le certificat obtenu
+# 3. Store the certificate obtained
 echo "$CERT" > $CERT_PATH
 
-# 4. Configurer SSH pour utiliser le certificat
+# 4. Configuring SSH to use the certificate
 mkdir -p ~/.ssh/
-chmod 700 ~/.ssh  # Assurez-vous que le répertoire .ssh a les bonnes permissions
+chmod 700 ~/.ssh 
 cat <<EOL >> ~/.ssh/config
 Host $SEREVR_IP
     IdentityFile $KEY_PATH
