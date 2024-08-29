@@ -25,7 +25,7 @@ Client side a bash script which:
 **WARNING** : This steps work on a AlmaLinux server, and was made for my needs; you have to adapt it for other OS or other config.
 Actually, what it does : 
 - Using port 5000 to work
-- Use /etc/ssh/certs folder to srote certificates files
+- Use /etc/ssh/certs folder to wrote certificates files
 - Use /etc/ssh/revoked_certs.txt to maintain list of certificate to revoke
 - Use /etc/ssh/revoked_keys to store revoked one
 - Execute every day at 3 AM the script to revoke
