@@ -3,10 +3,11 @@ import subprocess
 import os
 import tempfile
 import shutil
+import time
 
 app = Flask(__name__)
 
-CA_PRIVATE_KEY = "/etc/ssh/ssh_ca"# Put your CA private key
+CA_PRIVATE_KEY = "/etc/ssh/ssh_ca"
 CERTS_DIR = "/etc/ssh/certs/"
 API_TOKEN = "some_secure_token"  # Replace with your secure token
 REVOKED_LIST_FILE = "/etc/ssh/revoked_certs.txt"
@@ -28,11 +29,13 @@ def generate_cert():
         pubkey_file.write(public_key.encode())
         pubkey_file_path = pubkey_file.name
 
-    cert_file_path = os.path.join(CERTS_DIR, f'{username}-{hostname}-cert.pub')
+    cert_id = f"{hostname}-{int(time.time())}"
+    serial_number = str(int(time.time()))
+    cert_file_path = os.path.join(CERTS_DIR, f'{hostname}-{serial_number}-cert.pub')
 
     subprocess.run([
-        "ssh-keygen", "-s", CA_PRIVATE_KEY, "-I", username, "-n", username,
-        "-V", "+52w", "-z", "1", pubkey_file_path
+        "ssh-keygen", "-s", CA_PRIVATE_KEY, "-I", cert_id, "-n", username,
+        "-V", "+1w", "-z", serial_number, pubkey_file_path
     ], check=True)
 
     # Move the signed certificate to the correct location
@@ -45,10 +48,9 @@ def generate_cert():
 
     # Add certificate to revoked list
     with open(REVOKED_LIST_FILE, 'a') as file:
-        file.write(f'{username}-{hostname}-cert.pub\n')
+        file.write(f'{hostname}-{serial_number}-cert.pub\n')
 
     return jsonify({"certificate": cert_data})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-    
