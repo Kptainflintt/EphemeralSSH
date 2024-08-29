@@ -11,7 +11,7 @@ sudo ssh-keygen -t ecdsa -b 521 -f /etc/ssh/ssh_ca -N ""
 sudo chmod 600 /etc/ssh/ssh_ca
 sudo chmod 644 /etc/ssh/ssh_ca.pub
 sudo mkdir /etc/ssh/certs
-echo "@cert-authority 10.0.0.4 $(cat /etc/ssh/ssh_ca.pub)" | sudo tee -a /etc/ssh/ssh_known_hosts
+echo "@cert-authority X.X.X.X $(cat /etc/ssh/ssh_ca.pub)" | sudo tee -a /etc/ssh/ssh_known_hosts # Put CA's IP here
 sudo ssh-keygen -kf /etc/ssh/revoked_keys
 
 # Modify sshd config 
